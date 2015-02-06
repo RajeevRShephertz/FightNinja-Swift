@@ -67,11 +67,11 @@ class AppWarpHelper: NSObject
     
     func updatePlayerDataToServer(dataDict:NSMutableDictionary)
     {
-        if dataDict == nil
+        if dataDict == NSNull()
         {
             return
         }
-        
+        println(dataDict)
         var convertedData = NSJSONSerialization.dataWithJSONObject(dataDict, options: NSJSONWritingOptions.PrettyPrinted, error: nil)
         //var convertedData = NSPropertyListSerialization.dataWithPropertyList(dataDict, format: NSPropertyListFormat.XMLFormat_v1_0, options: 0, error: nil)
         
@@ -92,7 +92,7 @@ class AppWarpHelper: NSObject
         println("receivedEnemyStatus...1")
         println(data)
 
-        if data == nil
+        if data == NSNull()
         {
             println(data)
         }
@@ -100,16 +100,16 @@ class AppWarpHelper: NSObject
         {
             println("receivedEnemyStatus...2")
             
-            var error: NSErrorPointer? = nil;
-            var propertyListFormat:NSPropertyListFormat? = nil
-            var responseDict: NSDictionary = NSJSONSerialization.JSONObjectWithData(data,options: NSJSONReadingOptions.MutableContainers, error:error!) as NSDictionary
-            //var responseDict: NSDictionary = NSPropertyListSerialization.propertyListWithData(data, options: 0, format:&propertyListFormat, error: nil) as NSDictionary
+            var error: NSError? = nil;
+            var responseDict: NSMutableDictionary = NSJSONSerialization.JSONObjectWithData(data,options: NSJSONReadingOptions.MutableContainers, error:&error) as NSMutableDictionary
             
+            //var propertyListFormat:NSPropertyListFormat? = nil
+            //var responseDict: NSDictionary = NSPropertyListSerialization.propertyListWithData(data, options: 0, format:&propertyListFormat, error: nil) as NSDictionary
             println(responseDict)
-            println(error!.value)
+            //println(error!.value)
             //gameScene!.updateEnemyStatus(responseDict)
             
-            if !error!.getLogicValue()
+            if (error == nil)
             {
                 println("receivedEnemyStatus...3")
                 
@@ -127,7 +127,7 @@ class AppWarpHelper: NSObject
                 {
                     var userName : (String!) = responseDict.objectForKey("userName") as String
                     let isEqual = enemyName.hasPrefix(userName)
-                    if !isEqual
+                    if isEqual
                     {
                         gameScene!.updateEnemyStatus(responseDict)
                     }

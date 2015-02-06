@@ -14,25 +14,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var enemy:SKSpriteNode? = nil
     var isEnemyAdded = false
     
+    var bulletsTobeDeleted:NSMutableArray = NSMutableArray()
+    
     let playerBulletCategory:UInt32 = 0x1 << 0
     let enemyBulletCategory:UInt32  = 0x1 << 1
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
         
-        AppWarpHelper.sharedInstance.gameViewController!.userNameField.hidden = true
-        AppWarpHelper.sharedInstance.gameViewController!.playAsGuestButton.hidden = true
+        AppWarpHelper.sharedInstance.gameViewController!.userNameField?.hidden = true
+        AppWarpHelper.sharedInstance.gameViewController!.playAsGuestButton?.hidden = true
         
         player = SKSpriteNode(imageNamed:"Player")
         var x_player = player!.size.width/2
         player!.position = CGPoint(x:x_player, y:CGRectGetMidY(self.frame));
-        self.addChild(player)
+        self.addChild(player!)
         
         
         enemy = SKSpriteNode(imageNamed:"Enemy")
         var x_enemy = self.frame.size.width-enemy!.size.width/2
         enemy!.position = CGPoint(x:x_enemy, y:CGRectGetMidY(self.frame));
-        self.addChild(enemy)
+        self.addChild(enemy!)
         enemy!.alpha = 0.5
         
         self.physicsWorld.gravity = CGVectorMake(0, 0)
@@ -56,11 +58,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             bullet.position = CGPoint(x:x_player, y:player!.position.y);
             
             bullet.physicsBody = SKPhysicsBody(circleOfRadius:bullet.size.width/2)
-            bullet.physicsBody.dynamic = true
-            bullet.physicsBody.categoryBitMask = playerBulletCategory
-            bullet.physicsBody.contactTestBitMask = enemyBulletCategory
-            bullet.physicsBody.collisionBitMask = 0
-            bullet.physicsBody.usesPreciseCollisionDetection = true
+            bullet.physicsBody?.dynamic = true
+            bullet.physicsBody?.categoryBitMask = playerBulletCategory
+            bullet.physicsBody?.contactTestBitMask = enemyBulletCategory
+            bullet.physicsBody?.collisionBitMask = 0
+            bullet.physicsBody?.usesPreciseCollisionDetection = true
            /**
             * Determining offset of location of Bullet
             */
@@ -90,9 +92,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             */
             var offRealX = realX - bullet.position.x
             var offRealY = realY - bullet.position.y
-            var length = sqrtf((offRealX * offRealX)+(offRealY * offRealY))
+            var sum = (offRealX * offRealX)+(offRealY * offRealY)
+            var length = sqrt(sum)
             var velocity = self.frame.width/1
-            var realTimeDuration = (NSTimeInterval)(length / velocity)
+            var realTimeDuration = length/velocity
             
             var destination = CGPointMake(self.frame.width-realX, realY)
             var dataDict = NSMutableDictionary()
@@ -103,18 +106,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             var playerPosition:String = NSStringFromCGPoint(destination)
             dataDict.setObject(playerPosition, forKey: "playerPosition")
-            //dataDict.setObject(NSValue(CGPoint: player!.position), forKey: "playerPosition")
 
-            dataDict.setObject(String(realTimeDuration), forKey: "realMoveDuration")
-            //dataDict.setObject(NSValue(nonretainedObject: realTimeDuration), forKey: "realMoveDuration")
+            dataDict.setObject(NSString(format: "%lf", realTimeDuration.native), forKey: "realMoveDuration")//(String(realTimeDuration.native), forKey: "realMoveDuration")
             AppWarpHelper.sharedInstance.updatePlayerDataToServer(dataDict)
             /**
             * Shoot the bullet
             */
-            let shootAction = SKAction.moveTo(realDestination, duration: realTimeDuration)
+            let shootAction = SKAction.moveTo(realDestination, duration:realTimeDuration.native)
             let actionFinish = SKAction.removeFromParent()
             bullet.runAction(SKAction.sequence([shootAction,actionFinish]))
-            
         }
     }
     
@@ -131,7 +131,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemy!.alpha = 1.0
         isEnemyAdded = true
         
-        /**
+       /**
         * Creating Bullet
         */
         let bullet = SKSpriteNode(imageNamed:"Bullet-blue")
@@ -145,11 +145,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         * Adding physics body to the bullet
         */
         bullet.physicsBody = SKPhysicsBody(circleOfRadius:bullet.size.width/2)
-        bullet.physicsBody.dynamic = true
-        bullet.physicsBody.categoryBitMask = enemyBulletCategory
-        bullet.physicsBody.contactTestBitMask = playerBulletCategory
-        bullet.physicsBody.collisionBitMask = 0
-        bullet.physicsBody.usesPreciseCollisionDetection = true
+        bullet.physicsBody?.dynamic = true
+        bullet.physicsBody?.categoryBitMask = enemyBulletCategory
+        bullet.physicsBody?.contactTestBitMask = playerBulletCategory
+        bullet.physicsBody?.collisionBitMask = 0
+        bullet.physicsBody?.usesPreciseCollisionDetection = true
         /**
         * Adding Bullet to the scene
         */
@@ -159,7 +159,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         * Shoot the bullet
         */
         var realMoveDuration = dataDict.objectForKey("realMoveDuration") as String
-        var actualDuration:NSTimeInterval = (NSTimeInterval)(realMoveDuration.bridgeToObjectiveC().floatValue)
+        var actualDuration = NSString(string: realMoveDuration).doubleValue //(NSTimeInterval)(realMoveDuration.bridgeToObjectiveC().floatValue)
         var value = dataDict.objectForKey("projectileDest") as String
         var destination = CGPointFromString(value)
         
@@ -168,10 +168,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bullet.runAction(SKAction.sequence([shootAction,actionFinish]))
     }
     
-    func bulletsDidCollide(playerBullet:SKSpriteNode , enemyBullet:SKSpriteNode)
+    func bulletsDidCollide()
     {
-        playerBullet.removeFromParent()
-        enemyBullet.removeFromParent()
+        //playerBullet.removeFromParent()
+        //enemyBullet.removeFromParent()
+        for index in stride(from: bulletsTobeDeleted.count - 1, through: 0, by: -1) {
+            var bullet:SKSpriteNode = bulletsTobeDeleted.objectAtIndex(index) as SKSpriteNode;
+            bullet.removeFromParent()
+            bulletsTobeDeleted.removeObject(bullet);
+        }
     }
    
     override func update(currentTime: CFTimeInterval) {
@@ -200,8 +205,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if ((firstBullet.categoryBitMask & playerBulletCategory) != 0 &&
             (secondBullet.categoryBitMask & enemyBulletCategory) != 0)
         {
-            self.bulletsDidCollide(firstBullet.node as SKSpriteNode, enemyBullet: secondBullet.node as SKSpriteNode)
+            if !bulletsTobeDeleted.containsObject(firstBullet.node!)
+            {
+                bulletsTobeDeleted.addObject(firstBullet.node!)
+            }
+            if !bulletsTobeDeleted.containsObject(secondBullet.node!)
+            {
+                bulletsTobeDeleted.addObject(secondBullet.node!)
+            }
+            //self.bulletsDidCollide()
         }
     }
-    
 }

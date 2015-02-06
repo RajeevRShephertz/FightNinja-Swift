@@ -14,8 +14,8 @@ extension SKNode {
         
         let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks")
         
-        var sceneData = NSData.dataWithContentsOfFile(path, options: .DataReadingMappedIfSafe, error: nil)
-        var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
+        var sceneData = NSData(contentsOfFile: path!, options: .DataReadingMappedIfSafe, error: nil)
+        var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData!)
         
         archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
         let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as GameScene
@@ -26,8 +26,8 @@ extension SKNode {
 
 class GameViewController: UIViewController {
     
-    @IBOutlet var userNameField: UITextField
-    @IBOutlet var playAsGuestButton: UIButton
+    @IBOutlet var userNameField: UITextField?
+    @IBOutlet var playAsGuestButton: UIButton?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,14 +56,14 @@ class GameViewController: UIViewController {
     
     @IBAction func playAsGuest(AnyObject)
     {
-        userNameField.resignFirstResponder()
+        userNameField?.resignFirstResponder()
         
-        var uName = userNameField.text
-        var uNameLength = uName.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
+        var uName = userNameField?.text
+        var uNameLength = uName?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
         if uNameLength>0
         {
-            AppWarpHelper.sharedInstance.playerName = uName
-            AppWarpHelper.sharedInstance.connectWithAppWarpWithUserName(uName)
+            AppWarpHelper.sharedInstance.playerName = uName!
+            AppWarpHelper.sharedInstance.connectWithAppWarpWithUserName(uName!)
         }
     }
     
@@ -73,9 +73,9 @@ class GameViewController: UIViewController {
 
     override func supportedInterfaceOrientations() -> Int {
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            return Int(UIInterfaceOrientationMask.AllButUpsideDown.toRaw())
+            return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
         } else {
-            return Int(UIInterfaceOrientationMask.All.toRaw())
+            return Int(UIInterfaceOrientationMask.All.rawValue)
         }
     }
 
