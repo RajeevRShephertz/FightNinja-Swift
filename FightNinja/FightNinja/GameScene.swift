@@ -41,7 +41,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.contactDelegate = self
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        
+    
+    //override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         /* Called when a touch begins */
         
         for touch: AnyObject in touches {
@@ -158,9 +161,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         /**
         * Shoot the bullet
         */
-        var realMoveDuration = dataDict.objectForKey("realMoveDuration") as String
+        var realMoveDuration = dataDict.objectForKey("realMoveDuration") as! String
         var actualDuration = NSString(string: realMoveDuration).doubleValue //(NSTimeInterval)(realMoveDuration.bridgeToObjectiveC().floatValue)
-        var value = dataDict.objectForKey("projectileDest") as String
+        var value = dataDict.objectForKey("projectileDest") as! String
         var destination = CGPointFromString(value)
         
         let shootAction = SKAction.moveTo(destination, duration: actualDuration)
@@ -173,7 +176,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //playerBullet.removeFromParent()
         //enemyBullet.removeFromParent()
         for index in stride(from: bulletsTobeDeleted.count - 1, through: 0, by: -1) {
-            var bullet:SKSpriteNode = bulletsTobeDeleted.objectAtIndex(index) as SKSpriteNode;
+            var bullet:SKSpriteNode = bulletsTobeDeleted.objectAtIndex(index) as! SKSpriteNode;
             bullet.removeFromParent()
             bulletsTobeDeleted.removeObject(bullet);
         }
@@ -186,7 +189,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     /**
     * Collision Delegates
     */
-    func didBeginContact(contact: SKPhysicsContact!)
+    func didBeginContact(contact: SKPhysicsContact)
     {
         var firstBullet:SKPhysicsBody
         var secondBullet:SKPhysicsBody

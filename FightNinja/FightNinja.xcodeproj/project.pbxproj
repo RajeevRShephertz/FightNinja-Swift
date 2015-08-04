@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5DF6412C1B70969E005B4035 /* AppWarp_iOS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DF6412B1B70969E005B4035 /* AppWarp_iOS_SDK.framework */; };
 		D8D725B01952E0EF005B7011 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D725AF1952E0EF005B7011 /* AppDelegate.swift */; };
 		D8D725B21952E0EF005B7011 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = D8D725B11952E0EF005B7011 /* GameScene.sks */; };
 		D8D725B41952E0EF005B7011 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D725B31952E0EF005B7011 /* GameScene.swift */; };
@@ -16,7 +17,6 @@
 		D8D725C71952E0EF005B7011 /* FightNinjaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D725C61952E0EF005B7011 /* FightNinjaTests.swift */; };
 		D8D9F8F71954046B003C5ED0 /* AppWarpHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D9F8F61954046B003C5ED0 /* AppWarpHelper.swift */; };
 		D8D9F8F9195404A2003C5ED0 /* ConnectionListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D9F8F8195404A2003C5ED0 /* ConnectionListener.swift */; };
-		D8D9F8FB195414E0003C5ED0 /* AppWarp_iOS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8D9F8FA195414E0003C5ED0 /* AppWarp_iOS_SDK.framework */; };
 		D8D9F9011954254C003C5ED0 /* ZoneListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D9F9001954254C003C5ED0 /* ZoneListener.swift */; };
 		D8D9F90319542586003C5ED0 /* RoomListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D9F90219542586003C5ED0 /* RoomListener.swift */; };
 		D8D9F905195425B0003C5ED0 /* NotificationListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D9F904195425B0003C5ED0 /* NotificationListener.swift */; };
@@ -33,6 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5DF6412B1B70969E005B4035 /* AppWarp_iOS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppWarp_iOS_SDK.framework; path = ../../../AppWarp_GitHubRepo/AppWarp_iOS_SDK_Framework/V_1.10/AppWarp_iOS_SDK.framework; sourceTree = "<group>"; };
 		D8D725AA1952E0EF005B7011 /* FightNinja.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FightNinja.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8D725AE1952E0EF005B7011 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D8D725AF1952E0EF005B7011 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -46,7 +47,6 @@
 		D8D725C61952E0EF005B7011 /* FightNinjaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FightNinjaTests.swift; sourceTree = "<group>"; };
 		D8D9F8F61954046B003C5ED0 /* AppWarpHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppWarpHelper.swift; sourceTree = "<group>"; };
 		D8D9F8F8195404A2003C5ED0 /* ConnectionListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionListener.swift; sourceTree = "<group>"; };
-		D8D9F8FA195414E0003C5ED0 /* AppWarp_iOS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AppWarp_iOS_SDK.framework; sourceTree = "<group>"; };
 		D8D9F8FC19541518003C5ED0 /* FightNinja-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FightNinja-Bridging-Header.h"; sourceTree = "<group>"; };
 		D8D9F9001954254C003C5ED0 /* ZoneListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoneListener.swift; sourceTree = "<group>"; };
 		D8D9F90219542586003C5ED0 /* RoomListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomListener.swift; sourceTree = "<group>"; };
@@ -58,7 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D8D9F8FB195414E0003C5ED0 /* AppWarp_iOS_SDK.framework in Frameworks */,
+				5DF6412C1B70969E005B4035 /* AppWarp_iOS_SDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,6 +75,7 @@
 		D8D725A11952E0EF005B7011 = {
 			isa = PBXGroup;
 			children = (
+				5DF6412B1B70969E005B4035 /* AppWarp_iOS_SDK.framework */,
 				D8D725AC1952E0EF005B7011 /* FightNinja */,
 				D8D725C31952E0EF005B7011 /* FightNinjaTests */,
 				D8D725AB1952E0EF005B7011 /* Products */,
@@ -133,7 +134,6 @@
 		D8D9F8F519540351003C5ED0 /* AppWarpHelperClasses */ = {
 			isa = PBXGroup;
 			children = (
-				D8D9F8FA195414E0003C5ED0 /* AppWarp_iOS_SDK.framework */,
 				D8D9F8F61954046B003C5ED0 /* AppWarpHelper.swift */,
 				D8D9F8F8195404A2003C5ED0 /* ConnectionListener.swift */,
 				D8D9F9001954254C003C5ED0 /* ZoneListener.swift */,
@@ -373,6 +373,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/FightNinja/AppWarpHelperClasses",
+					/Users/Rajeev/Documents/AppWarp_GitHubRepo/AppWarp_iOS_SDK_Framework/V_1.10,
 				);
 				INFOPLIST_FILE = FightNinja/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -391,6 +392,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/FightNinja/AppWarpHelperClasses",
+					/Users/Rajeev/Documents/AppWarp_GitHubRepo/AppWarp_iOS_SDK_Framework/V_1.10,
 				);
 				INFOPLIST_FILE = FightNinja/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
