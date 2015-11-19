@@ -26,13 +26,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         AppWarpHelper.sharedInstance.gameViewController!.playAsGuestButton?.hidden = true
         
         player = SKSpriteNode(imageNamed:"Player")
-        var x_player = player!.size.width/2
+        let x_player = player!.size.width/2
         player!.position = CGPoint(x:x_player, y:CGRectGetMidY(self.frame));
         self.addChild(player!)
         
         
         enemy = SKSpriteNode(imageNamed:"Enemy")
-        var x_enemy = self.frame.size.width-enemy!.size.width/2
+        let x_enemy = self.frame.size.width-enemy!.size.width/2
         enemy!.position = CGPoint(x:x_enemy, y:CGRectGetMidY(self.frame));
         self.addChild(enemy!)
         enemy!.alpha = 0.5
@@ -41,7 +41,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.contactDelegate = self
     }
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
     
     //override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -57,7 +57,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             bullet.xScale = 0.5
             bullet.yScale = 0.5
             bullet.name = "2"
-            var x_player = player!.size.width/2 + player!.position.x
+            let x_player = player!.size.width/2 + player!.position.x
             bullet.position = CGPoint(x:x_player, y:player!.position.y);
             
             bullet.physicsBody = SKPhysicsBody(circleOfRadius:bullet.size.width/2)
@@ -69,8 +69,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
            /**
             * Determining offset of location of Bullet
             */
-            var offX = location.x - x_player
-            var offY = location.y - bullet.position.y
+            let offX = location.x - x_player
+            let offY = location.y - bullet.position.y
             
             /**
             * Restrict downward and backwards shooting
@@ -85,29 +85,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             /**
             * Calculating where to shoot
             */
-            var realX = self.frame.width + bullet.frame.width/2
-            var ratio = offY / offX
-            var realY = realX*ratio + bullet.position.y
-            var realDestination = CGPointMake(realX, realY)
+            let realX = self.frame.width + bullet.frame.width/2
+            let ratio = offY / offX
+            let realY = realX*ratio + bullet.position.y
+            let realDestination = CGPointMake(realX, realY)
             
             /**
             *  Calculating time and distance consumed by the bullet on the shooting path
             */
-            var offRealX = realX - bullet.position.x
-            var offRealY = realY - bullet.position.y
-            var sum = (offRealX * offRealX)+(offRealY * offRealY)
-            var length = sqrt(sum)
-            var velocity = self.frame.width/1
-            var realTimeDuration = length/velocity
+            let offRealX = realX - bullet.position.x
+            let offRealY = realY - bullet.position.y
+            let sum = (offRealX * offRealX)+(offRealY * offRealY)
+            let length = sqrt(sum)
+            let velocity = self.frame.width/1
+            let realTimeDuration = length/velocity
             
-            var destination = CGPointMake(self.frame.width-realX, realY)
-            var dataDict = NSMutableDictionary()
+            let destination = CGPointMake(self.frame.width-realX, realY)
+            let dataDict = NSMutableDictionary()
             dataDict.setObject(AppWarpHelper.sharedInstance.playerName, forKey: "userName")
             //dataDict.setObject(NSValue(CGPoint: destination), forKey: "projectileDest")
-            var destStr:String = NSStringFromCGPoint(destination)
+            let destStr:String = NSStringFromCGPoint(destination)
             dataDict.setObject(destStr, forKey: "projectileDest")
             
-            var playerPosition:String = NSStringFromCGPoint(destination)
+            let playerPosition:String = NSStringFromCGPoint(destination)
             dataDict.setObject(playerPosition, forKey: "playerPosition")
 
             dataDict.setObject(NSString(format: "%lf", realTimeDuration.native), forKey: "realMoveDuration")//(String(realTimeDuration.native), forKey: "realMoveDuration")
@@ -123,7 +123,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func updateEnemyStatus(dataDict: NSDictionary)
     {
-        println("updateEnemyStatus...1")
+        print("updateEnemyStatus...1")
 
         //playerPositon
         let count = dataDict.count
@@ -141,7 +141,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bullet.xScale = 0.5
         bullet.yScale = 0.5
         //bullet.name = "1"
-        var x_enemy = enemy!.position.x - enemy!.size.width/2
+        let x_enemy = enemy!.position.x - enemy!.size.width/2
         bullet.position = CGPoint(x:x_enemy, y:enemy!.position.y);
         
         /**
@@ -161,10 +161,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         /**
         * Shoot the bullet
         */
-        var realMoveDuration = dataDict.objectForKey("realMoveDuration") as! String
-        var actualDuration = NSString(string: realMoveDuration).doubleValue //(NSTimeInterval)(realMoveDuration.bridgeToObjectiveC().floatValue)
-        var value = dataDict.objectForKey("projectileDest") as! String
-        var destination = CGPointFromString(value)
+        let realMoveDuration = dataDict.objectForKey("realMoveDuration") as! String
+        let actualDuration = NSString(string: realMoveDuration).doubleValue //(NSTimeInterval)(realMoveDuration.bridgeToObjectiveC().floatValue)
+        let value = dataDict.objectForKey("projectileDest") as! String
+        let destination = CGPointFromString(value)
         
         let shootAction = SKAction.moveTo(destination, duration: actualDuration)
         let actionFinish = SKAction.removeFromParent()
@@ -175,8 +175,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     {
         //playerBullet.removeFromParent()
         //enemyBullet.removeFromParent()
-        for index in stride(from: bulletsTobeDeleted.count - 1, through: 0, by: -1) {
-            var bullet:SKSpriteNode = bulletsTobeDeleted.objectAtIndex(index) as! SKSpriteNode;
+        for index in (bulletsTobeDeleted.count - 1).stride(through: 0, by: -1) {
+            let bullet:SKSpriteNode = bulletsTobeDeleted.objectAtIndex(index) as! SKSpriteNode;
             bullet.removeFromParent()
             bulletsTobeDeleted.removeObject(bullet);
         }

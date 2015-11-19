@@ -12,7 +12,7 @@ class NotificationListener: NSObject,NotifyListener
 {
     func onUpdatePeersReceived(updateEvent:UpdateEvent)
     {
-        println("onUpdatePeersReceived")
+        print("onUpdatePeersReceived")
         AppWarpHelper.sharedInstance.receivedEnemyStatus(updateEvent.update)
     }
     func onUserLeftRoom(roomData: RoomData!, username: String!)

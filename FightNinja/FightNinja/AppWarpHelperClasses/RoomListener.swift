@@ -14,15 +14,15 @@ class RoomListener: NSObject,RoomRequestListener
     {
         if roomEvent.result == 0 // SUCESS
         {
-           var roomData:RoomData = roomEvent.roomData
+           let roomData:RoomData = roomEvent.roomData
            AppWarpHelper.sharedInstance.roomId = roomData.roomId
             WarpClient.getInstance().subscribeRoom(roomData.roomId)
-            println("onJoinRoomDone Success")
+            print("onJoinRoomDone Success")
 
         }
         else // Failed to join
         {
-            println("onJoinRoomDone Failed")
+            print("onJoinRoomDone Failed")
             WarpClient.getInstance().createRoomWithRoomName("R1", roomOwner: "Rajeev", properties: nil, maxUsers: 2)
         }
     }
@@ -31,12 +31,12 @@ class RoomListener: NSObject,RoomRequestListener
     {
         if roomEvent.result == 0 // SUCESS
         {
-            println("onSubscribeRoomDone Success")
+            print("onSubscribeRoomDone Success")
             AppWarpHelper.sharedInstance.gameViewController!.startGameScene()
         }
         else // Failed to join
         {
-            println("onSubscribeRoomDone Failed")
+            print("onSubscribeRoomDone Failed")
         }
     }
 }

@@ -15,7 +15,7 @@ class ZoneListener: NSObject,ZoneRequestListener
     
         if roomEvent.result == 0 //SUCCESS
         {
-            var roomData:RoomData = roomEvent.roomData
+            let roomData:RoomData = roomEvent.roomData
             AppWarpHelper.sharedInstance.roomId = roomData.roomId
             WarpClient.getInstance().joinRoom(roomData.roomId)
         }

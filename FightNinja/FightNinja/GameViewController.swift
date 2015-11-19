@@ -14,8 +14,8 @@ extension SKNode {
         
         let path = NSBundle.mainBundle().pathForResource(file as String, ofType: "sks")
         
-        var sceneData = NSData(contentsOfFile: path!, options: .DataReadingMappedIfSafe, error: nil)
-        var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData!)
+        let sceneData = try? NSData(contentsOfFile: path!, options: .DataReadingMappedIfSafe)
+        let archiver = NSKeyedUnarchiver(forReadingWithData: sceneData!)
         
         archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
         let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! GameScene
@@ -54,12 +54,12 @@ class GameViewController: UIViewController {
         }
     }
     
-    @IBAction func playAsGuest(AnyObject)
+    @IBAction func playAsGuest(_: AnyObject)
     {
         userNameField?.resignFirstResponder()
         
-        var uName = userNameField?.text
-        var uNameLength = uName?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
+        let uName = userNameField?.text
+        let uNameLength = uName?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
         if uNameLength>0
         {
             AppWarpHelper.sharedInstance.playerName = uName!
@@ -71,11 +71,11 @@ class GameViewController: UIViewController {
         return true
     }
 
-    override func supportedInterfaceOrientations() -> Int {
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
+            return UIInterfaceOrientationMask.AllButUpsideDown
         } else {
-            return Int(UIInterfaceOrientationMask.All.rawValue)
+            return UIInterfaceOrientationMask.All
         }
     }
 

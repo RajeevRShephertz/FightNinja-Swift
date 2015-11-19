@@ -36,30 +36,30 @@ class AppWarpHelper: NSObject
     func initializeWarp()
     {
         WarpClient.initWarp(api_key, secretKey: secret_key)
-        var warpClient:WarpClient = WarpClient.getInstance()
+        let warpClient:WarpClient = WarpClient.getInstance()
         warpClient.enableTrace(true)
         warpClient.setRecoveryAllowance(60);
         
-        var connectionListener: ConnectionListener = ConnectionListener()
+        let connectionListener: ConnectionListener = ConnectionListener()
         warpClient.addConnectionRequestListener(connectionListener)
         
         
-        var zoneListener: ZoneListener = ZoneListener()
+        let zoneListener: ZoneListener = ZoneListener()
         warpClient.addZoneRequestListener(zoneListener)
         
-        var notificationListener:NotificationListener = NotificationListener()
+        let notificationListener:NotificationListener = NotificationListener()
         warpClient.addNotificationListener(notificationListener)
         
-        var roomListener: RoomListener = RoomListener()
+        let roomListener: RoomListener = RoomListener()
         warpClient.addRoomRequestListener(roomListener)
     }
     
     func connectWithAppWarpWithUserName(userName:String)
     {
-        var uNameLength = userName.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
+        let uNameLength = userName.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
         if uNameLength>0
         {
-            var warpClient:WarpClient = WarpClient.getInstance()
+            let warpClient:WarpClient = WarpClient.getInstance()
             warpClient.connectWithUserName(userName)
         }
     }
@@ -71,8 +71,8 @@ class AppWarpHelper: NSObject
         {
             return
         }
-        println(dataDict)
-        var convertedData = NSJSONSerialization.dataWithJSONObject(dataDict, options: NSJSONWritingOptions.PrettyPrinted, error: nil)
+        print(dataDict)
+        let convertedData = try? NSJSONSerialization.dataWithJSONObject(dataDict, options: NSJSONWritingOptions.PrettyPrinted)
         //var convertedData = NSPropertyListSerialization.dataWithPropertyList(dataDict, format: NSPropertyListFormat.XMLFormat_v1_0, options: 0, error: nil)
         
         if convertedData == nil
@@ -82,40 +82,40 @@ class AppWarpHelper: NSObject
         
         if WarpClient.getInstance().getConnectionState()==0
         {
-            println("updatePlayerDataToServer")
+            print("updatePlayerDataToServer")
             WarpClient.getInstance().sendUpdatePeers(convertedData)
         }
     }
     
     func receivedEnemyStatus(data:NSData)
     {
-        println("receivedEnemyStatus...1")
-        println(data)
+        print("receivedEnemyStatus...1")
+        print(data)
 
         if data == NSNull()
         {
-            println(data)
+            print(data)
         }
         else
         {
-            println("receivedEnemyStatus...2")
+            print("receivedEnemyStatus...2")
             
-            var error: NSError? = nil;
-            var responseDict: NSMutableDictionary = NSJSONSerialization.JSONObjectWithData(data,options: NSJSONReadingOptions.MutableContainers, error:&error) as! NSMutableDictionary
+            let error: NSError? = nil;
+            let responseDict: NSMutableDictionary = (try! NSJSONSerialization.JSONObjectWithData(data,options: NSJSONReadingOptions.MutableContainers)) as! NSMutableDictionary
             
             //var propertyListFormat:NSPropertyListFormat? = nil
             //var responseDict: NSDictionary = NSPropertyListSerialization.propertyListWithData(data, options: 0, format:&propertyListFormat, error: nil) as NSDictionary
-            println(responseDict)
+            print(responseDict)
             //println(error!.value)
             //gameScene!.updateEnemyStatus(responseDict)
             
             if (error == nil)
             {
-                println("receivedEnemyStatus...3")
+                print("receivedEnemyStatus...3")
                 
                 if enemyName.isEmpty
                 {
-                    var userName : (String!) = responseDict.objectForKey("userName") as! String
+                    let userName : (String!) = responseDict.objectForKey("userName") as! String
                     let isEqual = playerName.hasPrefix(userName)
                     if !isEqual
                     {
@@ -125,7 +125,7 @@ class AppWarpHelper: NSObject
                 }
                 else
                 {
-                    var userName : (String!) = responseDict.objectForKey("userName") as! String
+                    let userName : (String!) = responseDict.objectForKey("userName") as! String
                     let isEqual = enemyName.hasPrefix(userName)
                     if isEqual
                     {
