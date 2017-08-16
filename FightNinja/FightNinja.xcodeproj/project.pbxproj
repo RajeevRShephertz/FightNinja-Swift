@@ -33,6 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5D65A1FB1F4468D30049AAA0 /* FightNinja.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FightNinja.entitlements; sourceTree = "<group>"; };
 		5DFDF0691BFDA55F009747E9 /* AppWarp_iOS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AppWarp_iOS_SDK.framework; sourceTree = "<group>"; };
 		D8D725AA1952E0EF005B7011 /* FightNinja.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FightNinja.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8D725AE1952E0EF005B7011 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -94,6 +95,7 @@
 		D8D725AC1952E0EF005B7011 /* FightNinja */ = {
 			isa = PBXGroup;
 			children = (
+				5D65A1FB1F4468D30049AAA0 /* FightNinja.entitlements */,
 				D8D9F8F519540351003C5ED0 /* AppWarpHelperClasses */,
 				D8D725AF1952E0EF005B7011 /* AppDelegate.swift */,
 				D8D725B11952E0EF005B7011 /* GameScene.sks */,
@@ -195,9 +197,18 @@
 				TargetAttributes = {
 					D8D725A91952E0EF005B7011 = {
 						CreatedOnToolsVersion = 6.0;
+						DevelopmentTeam = 93TF9ZT92J;
+						LastSwiftMigration = 0830;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					D8D725BF1952E0EF005B7011 = {
 						CreatedOnToolsVersion = 6.0;
+						LastSwiftMigration = 0830;
 						TestTargetID = D8D725A91952E0EF005B7011;
 					};
 				};
@@ -374,6 +385,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = FightNinja/FightNinja.entitlements;
+				DEVELOPMENT_TEAM = 93TF9ZT92J;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -383,9 +396,13 @@
 				);
 				INFOPLIST_FILE = FightNinja/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.shephertz.TestApp42;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "65b442da-51d9-4809-a854-c25ced4d57d2";
+				PROVISIONING_PROFILE_SPECIFIER = testApp42Dev;
 				SWIFT_OBJC_BRIDGING_HEADER = "FightNinja/AppWarpHelperClasses/FightNinja-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -395,6 +412,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = FightNinja/FightNinja.entitlements;
+				DEVELOPMENT_TEAM = 93TF9ZT92J;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -404,8 +423,12 @@
 				);
 				INFOPLIST_FILE = FightNinja/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.shephertz.TestApp42;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "65b442da-51d9-4809-a854-c25ced4d57d2";
+				PROVISIONING_PROFILE_SPECIFIER = testApp42Dev;
 				SWIFT_OBJC_BRIDGING_HEADER = "FightNinja/AppWarpHelperClasses/FightNinja-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -425,6 +448,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				METAL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
 			name = Debug;
@@ -441,6 +465,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				METAL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
 			name = Release;

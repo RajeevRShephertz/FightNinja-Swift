@@ -10,7 +10,7 @@ import UIKit
 
 class RoomListener: NSObject,RoomRequestListener
 {
-    func onJoinRoomDone(roomEvent:RoomEvent)
+    func onJoinRoomDone(_ roomEvent:RoomEvent)
     {
         if roomEvent.result == 0 // SUCESS
         {
@@ -23,11 +23,11 @@ class RoomListener: NSObject,RoomRequestListener
         else // Failed to join
         {
             print("onJoinRoomDone Failed")
-            WarpClient.getInstance().createRoomWithRoomName("R1", roomOwner: "Rajeev", properties: nil, maxUsers: 2)
+            WarpClient.getInstance().createRoom(withRoomName: "R1", roomOwner: "Rajeev", properties: nil, maxUsers: 2)
         }
     }
     
-    func onSubscribeRoomDone(roomEvent: RoomEvent)
+    func onSubscribeRoomDone(_ roomEvent: RoomEvent)
     {
         if roomEvent.result == 0 // SUCESS
         {

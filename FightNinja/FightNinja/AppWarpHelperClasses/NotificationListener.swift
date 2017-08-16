@@ -10,27 +10,28 @@ import UIKit
 
 class NotificationListener: NSObject,NotifyListener
 {
-    func onUpdatePeersReceived(updateEvent:UpdateEvent)
+    func onUpdatePeersReceived(_ updateEvent:UpdateEvent)
     {
         print("onUpdatePeersReceived")
-        AppWarpHelper.sharedInstance.receivedEnemyStatus(updateEvent.update)
+        let appwarphelper = AppWarpHelper.sharedInstance
+        appwarphelper.receivedEnemyStatus(data: updateEvent.update! as NSData)
     }
-    func onUserLeftRoom(roomData: RoomData!, username: String!)
+    func onUserLeftRoom(_ roomData: RoomData!,username: String!)
     {
         
     }
     
-    func onUserResumed(userName: String!, withLocation locId: String!, isLobby: Bool)
+    func onUserResumed(_ userName: String!, withLocation locId: String!,_ isLobby: Bool)
     {
         
     }
     
-    func onUserPaused(userName: String!, withLocation locId: String!, isLobby: Bool)
+    func onUserPaused(_ userName: String!, withLocation locId: String!,_ isLobby: Bool)
     {
         
     }
     
-    func onUserJoinedRoom(roomData: RoomData!, username: String!)
+    func onUserJoinedRoom(_ roomData: RoomData!,username: String!)
     {
         
     }

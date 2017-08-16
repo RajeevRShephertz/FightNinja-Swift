@@ -8,17 +8,41 @@
 
 import UIKit
 import SpriteKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 extension SKNode {
-    class func unarchiveFromFile(file : NSString) -> SKNode? {
+    class func unarchiveFromFile(_ file : NSString) -> SKNode? {
         
-        let path = NSBundle.mainBundle().pathForResource(file as String, ofType: "sks")
+        let path = Bundle.main.path(forResource: file as String, ofType: "sks")
         
-        let sceneData = try? NSData(contentsOfFile: path!, options: .DataReadingMappedIfSafe)
-        let archiver = NSKeyedUnarchiver(forReadingWithData: sceneData!)
+        let sceneData = try? Data(contentsOf: URL(fileURLWithPath: path!), options: .mappedIfSafe)
+        let archiver = NSKeyedUnarchiver(forReadingWith: sceneData!)
         
         archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
-        let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! GameScene
+        let scene = archiver.decodeObject(forKey: NSKeyedArchiveRootObjectKey) as! GameScene
         archiver.finishDecoding()
         return scene
     }
@@ -32,8 +56,10 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        AppWarpHelper.sharedInstance.initializeWarp()
-        AppWarpHelper.sharedInstance.gameViewController = self
+        let appWarpHelper = AppWarpHelper.sharedInstance
+        appWarpHelper.initializeWarp()
+        appWarpHelper.gameViewController = self
+        
     }
 
     func startGameScene()
@@ -48,7 +74,7 @@ class GameViewController: UIViewController {
             skView.ignoresSiblingOrder = true
             
             /* Set the scale mode to scale to fit the window */
-            scene.scaleMode = .AspectFill
+            scene.scaleMode = .aspectFill
             AppWarpHelper.sharedInstance.gameScene = scene
             skView.presentScene(scene)
         }
@@ -59,23 +85,24 @@ class GameViewController: UIViewController {
         userNameField?.resignFirstResponder()
         
         let uName = userNameField?.text
-        let uNameLength = uName?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
+        let uNameLength = uName?.lengthOfBytes(using: String.Encoding.utf8)
         if uNameLength>0
         {
-            AppWarpHelper.sharedInstance.playerName = uName!
-            AppWarpHelper.sharedInstance.connectWithAppWarpWithUserName(uName!)
+            let appWarpHelper = AppWarpHelper.sharedInstance
+            appWarpHelper.playerName = uName!
+            appWarpHelper.connectWithAppWarpWithUserName(userName: uName!)
         }
     }
     
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate : Bool {
         return true
     }
 
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            return UIInterfaceOrientationMask.AllButUpsideDown
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            return UIInterfaceOrientationMask.allButUpsideDown
         } else {
-            return UIInterfaceOrientationMask.All
+            return UIInterfaceOrientationMask.all
         }
     }
 

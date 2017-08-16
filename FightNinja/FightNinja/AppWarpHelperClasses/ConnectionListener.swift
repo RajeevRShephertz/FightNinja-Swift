@@ -10,14 +10,14 @@ import UIKit
 
 class ConnectionListener: NSObject,ConnectionRequestListener
 {
-    func onConnectDone(event: ConnectEvent!)
+    func onConnectDone(_ event: ConnectEvent!)
     {
         //println("onConnectDone ErrorCode=%d",event.result)
 
         if event.result == 0 // SUCCESS
         {
             print("onConnectDone SUCCESS")
-            WarpClient.getInstance().joinRoomInRangeBetweenMinUsers(0, andMaxUsers: 1, maxPrefered: true)
+            WarpClient.getInstance().joinRoom(inRangeBetweenMinUsers: 0, andMaxUsers: 1, maxPrefered: true)
         }
         else if event.result == 1  // AUTH_ERROR
         {
